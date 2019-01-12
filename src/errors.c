@@ -105,16 +105,16 @@ void giterr_set_str(int error_class, const char *string)
 		set_error_from_buffer(error_class);
 }
 
-int giterr_set_regex(const regex_t *regex, int error_code)
+int giterr_set_regex(const p_regex_t *regex, int error_code)
 {
 	char error_buf[1024];
 
 	assert(error_code);
 
-	regerror(error_code, regex, error_buf, sizeof(error_buf));
+	p_regerror(error_code, regex, error_buf, sizeof(error_buf));
 	giterr_set_str(GITERR_REGEX, error_buf);
 
-	if (error_code == REG_NOMATCH)
+	if (error_code == P_REG_NOMATCH)
 		return GIT_ENOTFOUND;
 
 	return GIT_EINVALIDSPEC;
