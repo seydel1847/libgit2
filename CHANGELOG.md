@@ -1,3 +1,29 @@
+v0.27.8
+-------
+
+This is a bugfix release with the following change:
+
+- Always provide custom transport implementations with the URL in the
+  action function.  v0.27.7 included a change that would erroneously
+  provide NULL to subsequent calls to the action function.  This is
+  fixed.
+
+- Fix several bugs parsing malformed commits.
+
+- Allow configuration file directory locations to be specified as
+  `/dev/null`.
+
+- Ensure that when an error occurs reading from the loose ODB backend
+  that we do not segfault.
+
+- Ensure that when a filter stream application fails that we do not
+  segfault.
+
+- Ensure that any configuration reading failures are propagated while
+  loading submodule information.
+
+- Peel annotated tags fully when creating an annotated commit.
+
 v0.27.7
 -------
 
