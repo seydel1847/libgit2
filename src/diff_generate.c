@@ -564,9 +564,14 @@ int git_diff__oid_for_file(
 {
 	git_index_entry entry;
 
+	if (!git__is_sizet(size)) {
+		giterr_set(GITERR_NOMEMORY, "file size overflow (for 32-bits) on '%s'", path);
+		return -1;
+	}
+
 	memset(&entry, 0, sizeof(entry));
 	entry.mode = mode;
-	entry.file_size = size;
+	entry.file_size = (size_t)size;
 	entry.path = (char *)path;
 
 	return git_diff__oid_for_entry(out, diff, &entry, mode, NULL);
@@ -628,7 +633,7 @@ int git_diff__oid_for_entry(
 		error = git_odb__hashlink(out, full_path.ptr);
 		diff->base.perf.oid_calculations++;
 	} else if (!git__is_sizet(entry.file_size)) {
-		giterr_set(GITERR_OS, "file size overflow (for 32-bits) on '%s'",
+		giterr_set(GITERR_NOMEMORY, "file size overflow (for 32-bits) on '%s'",
 			entry.path);
 		error = -1;
 	} else if (!(error = git_filter_list_load(&fl,
