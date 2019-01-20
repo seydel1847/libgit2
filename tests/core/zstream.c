@@ -68,7 +68,7 @@ void test_core_zstream__fails_on_trailing_garbage(void)
 
 	/* append some garbage */
 	for (i = 0; i < 10; i++) {
-		git_buf_putc(&deflated, i);
+		git_buf_putc(&deflated, (char)i);
 	}
 
 	cl_git_fail(git_zstream_inflatebuf(&inflated, deflated.ptr, deflated.size));
