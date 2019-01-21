@@ -286,7 +286,9 @@ int git_delta_create_from_index(
 	if (!trg_buf || !trg_size)
 		return 0;
 
-	if (index->src_size > UINT_MAX || trg_size > UINT_MAX) {
+	if (index->src_size > UINT_MAX ||
+	    trg_size > UINT_MAX ||
+	    max_size > (UINT_MAX - MAX_OP_SIZE - 1)) {
 		giterr_set(GITERR_INVALID, "buffer sizes too large for delta processing");
 		return -1;
 	}
