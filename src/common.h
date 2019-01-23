@@ -76,6 +76,7 @@
 
 #include "git2/types.h"
 #include "git2/errors.h"
+#include "git2/deprecated.h"
 #include "thread-utils.h"
 #include "integer.h"
 
